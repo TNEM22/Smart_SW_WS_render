@@ -23,7 +23,7 @@ class ConnectionManager:
                 await websocket.close(
                     code=1008, reason="Server Disconnected, Please wait...")
         else:
-            if len(self.active_connections[self.nodeId]) < 1:
+            if len(self.active_connections[self.nodeId]) == 1:
                 self.active_connections[userId].append(websocket)
                 await websocket.accept()
             else:
