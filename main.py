@@ -1,4 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+import requests
 
 app = FastAPI()
 
@@ -17,11 +18,12 @@ class ConnectionManager:
                 self.active_connections[userId] = [websocket]
                 await websocket.accept()
             else:
+                requests.get('https://smart-sw-backend.onrender.com/')
                 await websocket.accept()
                 await websocket.close(
                     code=1008, reason="Server Disconnected, Please wait...")
         else:
-            if len(self.active_connections[self.nodeId]) <= 1:
+            if len(self.active_connections[self.nodeId]) < 1:
                 self.active_connections[userId].append(websocket)
                 await websocket.accept()
             else:
